@@ -1,0 +1,4 @@
+rootProject.name = 'Microservice-Weather'
+include 'weather-common'
+include 'weather-collection-service'
+include 'weather-data-service'
