@@ -1,20 +1,12 @@
 package com.xxx.weather.collectionservice.service;
 
-import org.apache.commons.io.Charsets;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.jcs.utils.zip.CompressionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
-import java.util.zip.GZIPInputStream;
 
 /**
  * @author xin
@@ -41,11 +33,11 @@ public class WeatherDataCollectionServiceImpl implements WeatherDataCollectionSe
     private void saveWeatherData(String uri) {
         String key = uri;
         String responseString = null;
-
-        ResponseEntity<byte[]> response = restTemplate.getForEntity(uri, byte[].class);
-        GZIPInputStream gzip = null;
-        try {
-            byte[] bytes = CompressionUtil.decompressGzipByteArray(response.getBody());
+        responseString = restTemplate.getForObject(uri, String.class);
+        //ResponseEntity<byte[]> response = restTemplate.getForEntity(uri, byte[].class);
+        //GZIPInputStream gzip = null;
+        //try {
+            //byte[] bytes = CompressionUtil.decompressGzipByteArray(response.getBody());
             /*gzip = new GZIPInputStream(new ByteArrayInputStream(response.getBody()));
             StringWriter writer = new StringWriter();
             */
@@ -58,10 +50,10 @@ public class WeatherDataCollectionServiceImpl implements WeatherDataCollectionSe
 
             /* 使用IOUtils方法
             IOUtils.copy(gzip, writer, "UTF-8");*/
-            responseString = new String(bytes, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            //responseString = new String(bytes, StandardCharsets.UTF_8);
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //}
 
         ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
         ops.set(key, responseString, TIMEOUT, TimeUnit.SECONDS);
