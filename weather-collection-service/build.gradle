@@ -25,7 +25,9 @@ repositories {
 
 
 dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-data-redis')
     compile('org.springframework.boot:spring-boot-starter-quartz')
+    compile('commons-io:commons-io:2.6')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }

@@ -3,15 +3,12 @@ package com.xxx.weather.collectionservice.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.http.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import sun.misc.IOUtils;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+import java.nio.charset.Charset;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPInputStream;
 
@@ -46,7 +43,7 @@ public class WeatherDataCollectionServiceImpl implements WeatherDataCollectionSe
         try {
             gzip = new GZIPInputStream(new ByteArrayInputStream(response.getBody()));
             StringWriter writer = new StringWriter();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(gzip));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(gzip, Charset.forName("UTF-8")));
             String line;
             while ((line = reader.readLine()) != null) {
                 writer.write(line);
