@@ -29,5 +29,6 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-redis')
     compile('org.springframework.boot:spring-boot-starter-quartz')
     compile('commons-io:commons-io:2.6')
+    compile('org.apache.commons:commons-jcs-core:2.2')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }

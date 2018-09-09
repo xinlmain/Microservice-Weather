@@ -1,5 +1,8 @@
 package com.xxx.weather.collectionservice.service;
 
+import org.apache.commons.io.Charsets;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.jcs.utils.zip.CompressionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -9,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPInputStream;
 
@@ -41,15 +45,20 @@ public class WeatherDataCollectionServiceImpl implements WeatherDataCollectionSe
         ResponseEntity<byte[]> response = restTemplate.getForEntity(uri, byte[].class);
         GZIPInputStream gzip = null;
         try {
-            gzip = new GZIPInputStream(new ByteArrayInputStream(response.getBody()));
+            byte[] bytes = CompressionUtil.decompressGzipByteArray(response.getBody());
+            /*gzip = new GZIPInputStream(new ByteArrayInputStream(response.getBody()));
             StringWriter writer = new StringWriter();
+            */
+            /* 使用原生类
             BufferedReader reader = new BufferedReader(new InputStreamReader(gzip, Charset.forName("UTF-8")));
             String line;
             while ((line = reader.readLine()) != null) {
                 writer.write(line);
-            }
-            //IOUtils.copy(gzip, writer, "UTF-8");
-            responseString = writer.toString();
+            }*/
+
+            /* 使用IOUtils方法
+            IOUtils.copy(gzip, writer, "UTF-8");*/
+            responseString = new String(bytes, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
         }
