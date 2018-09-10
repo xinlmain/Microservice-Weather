@@ -1,4 +1,4 @@
-package com.xxx.weather.collectionservice.domain;
+package com.xxx.weather.common;
 
 /**
  * @author xin

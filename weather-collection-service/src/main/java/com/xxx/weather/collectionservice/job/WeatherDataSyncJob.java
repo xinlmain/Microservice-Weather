@@ -1,7 +1,7 @@
 package com.xxx.weather.collectionservice.job;
 
-import com.xxx.weather.collectionservice.domain.City;
 import com.xxx.weather.collectionservice.service.WeatherDataCollectionService;
+import com.xxx.weather.common.City;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
