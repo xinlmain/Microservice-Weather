@@ -11,6 +11,7 @@ import java.util.List;
  * @date 2018/9/12 22:15
  */
 @FeignClient("weather-city-service")
+@Deprecated
 public interface CityClient {
 
     @GetMapping("/cities")

@@ -17,11 +17,11 @@ import java.util.List;
 public class WeatherReportServiceImpl implements WeatherReportService {
 
     @Autowired
-    private WeatherClient weatherClient;
+    private DataClient dataClient;
 
     @Override
     public Weather getDataByCityId(String cityId) {
-        WeatherResponse weatherResponse = weatherClient.getWeatherByCityId(cityId);
+        WeatherResponse weatherResponse = dataClient.getWeatherByCityId(cityId);
         return weatherResponse.getData();
     }
 }
