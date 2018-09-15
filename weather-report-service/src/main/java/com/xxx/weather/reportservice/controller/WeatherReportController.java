@@ -1,6 +1,8 @@
 package com.xxx.weather.reportservice.controller;
 
 import com.xxx.weather.common.City;
+import com.xxx.weather.reportservice.service.CityClient;
+import com.xxx.weather.reportservice.service.DataClient;
 import com.xxx.weather.reportservice.service.WeatherReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -22,15 +24,14 @@ import java.util.List;
 public class WeatherReportController {
 
     @Autowired
+    private DataClient dataClient;
+
+    @Autowired
     private WeatherReportService weatherReportService;
 
     @GetMapping("/cityId/{cityId}")
     public ModelAndView getReportByCityId(@PathVariable("cityId") String cityId, Model model) throws Exception {
-        List<City> cityList = new ArrayList<>();//cityDataService.listCity();
-        City city = new City();
-        city.setCityId("101280101");
-        city.setCityName("广州");
-        cityList.add(city);
+        List<City> cityList = dataClient.listCity();
         model.addAttribute("title", "xxx的天气预报");
         model.addAttribute("cityId", cityId);
         model.addAttribute("cityList", cityList);

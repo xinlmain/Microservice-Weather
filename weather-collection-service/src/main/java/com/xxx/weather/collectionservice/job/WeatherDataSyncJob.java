@@ -1,5 +1,6 @@
 package com.xxx.weather.collectionservice.job;
 
+import com.xxx.weather.collectionservice.service.CityClient;
 import com.xxx.weather.collectionservice.service.WeatherDataCollectionService;
 import com.xxx.weather.common.City;
 import org.quartz.JobExecutionContext;
@@ -20,8 +21,8 @@ public class WeatherDataSyncJob extends QuartzJobBean {
 
     private static final Logger logger = LoggerFactory.getLogger(WeatherDataSyncJob.class);
 
-//    @Autowired
-//    private CityDataService cityDataService;
+    @Autowired
+    private CityClient cityClient;
 
     @Autowired
     private WeatherDataCollectionService weatherDataCollectionService;
@@ -33,11 +34,7 @@ public class WeatherDataSyncJob extends QuartzJobBean {
         List<City> cityList = null;
 
         try {
-            cityList = new ArrayList<>();//cityDataService.listCity();
-            City city = new City();
-            city.setCityId("101280101");
-            city.setCityName("广州");
-            cityList.add(city);
+            cityList = cityClient.listCity();
         } catch (Exception e) {
             e.printStackTrace();
         }
