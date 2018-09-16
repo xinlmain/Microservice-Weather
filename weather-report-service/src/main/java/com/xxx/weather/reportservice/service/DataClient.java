@@ -12,7 +12,7 @@ import java.util.List;
  * @author xin
  * @date 2018/9/12 22:15
  */
-@FeignClient("weather-zuul-server")
+@FeignClient(name = "weather-zuul-server", fallback = DataClientFallback.class)
 public interface DataClient {
 
     @GetMapping("/city/cities")
